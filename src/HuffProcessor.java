@@ -62,12 +62,25 @@ public class HuffProcessor {
 	
 
 	private void writeCompressedBits(String[] codings, BitInputStream in, BitOutputStream out) {
-		// TODO Auto-generated method stub
-		
+		for(int k=0;k<codings.length;k++) {
+			String code = codings[k];
+			out.writeBits(code.length(), Integer.parseInt(code,2));
+		}
+		String code = codings[PSEUDO_EOF];
+		out.writeBits(code.length(), Integer.parseInt(code,2));
 	}
 
 	private void writeHeader(HuffNode root, BitOutputStream out) {
-		
+		if(root.myValue==-1) throw new HuffException("error");
+		if(root.myLeft==null && root.myRight==null) {
+			out.write(1);
+			out.write(BITS_PER_WORD + 1);
+		}
+		else {
+			out.write(0);
+			writeHeader(root.myLeft,out);
+			writeHeader(root.myRight,out);
+		}
 		
 	}
 	private void codingHelper(HuffNode root,String s,String[] encoding) {
