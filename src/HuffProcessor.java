@@ -73,7 +73,7 @@ public class HuffProcessor {
 	}
 
 	private void writeMagic(HuffNode root, BitOutputStream out) {
-		out.write(HUFF_NUMBER);
+		out.write(HUFF_TREE);
 		writeHeader(root,out);
 	}
 	private void writeHeader(HuffNode root, BitOutputStream out) {
