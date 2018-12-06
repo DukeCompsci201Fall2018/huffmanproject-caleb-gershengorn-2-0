@@ -175,7 +175,7 @@ public class HuffProcessor {
 		
 	}
 
-	public HuffNode readTreeHeader(BitInputStream s) {
+	private HuffNode readTreeHeader(BitInputStream s) {
 		int bit = s.readBits(1);
 		if(bit==-1) {
 			throw new HuffException("error");
