@@ -53,7 +53,7 @@ public class HuffProcessor {
 		String[] codings = makeCodingsFromTree(root);
 		
 		out.writeBits(BITS_PER_INT, HUFF_TREE);
-		writeHeader(root,out);
+		writeMagic(root,out);
 		
 		in.reset();
 		writeCompressedBits(codings,in,out);
@@ -72,6 +72,10 @@ public class HuffProcessor {
 		out.writeBits(code.length(), Integer.parseInt(code,2));
 	}
 
+	private void writeMagic(HuffNode root, BitOutputStream out) {
+		out.write(HUFF_NUMBER);
+		writeHeader(root,out);
+	}
 	private void writeHeader(HuffNode root, BitOutputStream out) {
 		if(root.myValue==-1) throw new HuffException("error");
 		if(root.myLeft==null && root.myRight==null) {
